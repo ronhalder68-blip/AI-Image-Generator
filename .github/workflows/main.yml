@@ -27,9 +27,15 @@ jobs:
         with:
           gradle-version: '8.10.2'
 
-      - name: Build APK
+      - name: Enable AndroidX
+        run: |
+          echo "android.useAndroidX=true" > gradle.properties
+          echo "android.enableJetifier=true" >> gradle.properties
         working-directory: build-project
+
+      - name: Build APK
         run: gradle assembleDebug
+        working-directory: build-project
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
